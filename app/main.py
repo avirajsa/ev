@@ -11,11 +11,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger("ev.main")
 
+from app.db.session import init_db
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing EV Cloud Backend...")
     logger.info(f"Primary LLM Model: {settings.PRIMARY_MODEL}")
     logger.info(f"LLM Fallback Chain: {settings.FALLBACK_MODELS}")
+    await init_db()
     yield
     logger.info("Shutting down EV Cloud Backend...")
 

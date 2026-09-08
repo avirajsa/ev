@@ -5,16 +5,18 @@ from app.core.llm_router import llm_router
 from app.core.device_manager import device_manager
 from app.agent.prompts import SYSTEM_PERSONA_PROMPT
 
+from app.mcp.client import mcp_manager
+
 logger = logging.getLogger("ev.orchestrator")
 
 class AgentOrchestrator:
     """
-    EV Brain & Agent Orchestrator. Coordinates LLM reasoning, MCP tools,
-    remote device execution (via device_manager), and persistent memory.
+    EV Brain & Agent Orchestrator. Coordinates LLM reasoning, free MCP servers
+    (System OS, Web Search, Memory), remote device execution, and persistent context.
     """
 
     def __init__(self):
-        self.tools = [
+        self.device_tools = [
             {
                 "type": "function",
                 "function": {
@@ -58,8 +60,13 @@ class AgentOrchestrator:
             }
         ]
 
+    def get_all_tools(self) -> List[Dict[str, Any]]:
+        """Combines native device tools with registered free MCP server tools."""
+        mcp_tools = mcp_manager.get_all_mcp_tool_definitions()
+        return self.device_tools + mcp_tools
+
     async def execute_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
-        """Executes a tool call requested by EV LLM."""
+        """Executes a tool call requested by EV LLM (Device RPC or MCP tool)."""
         logger.info(f"[Orchestrator] Executing tool '{tool_name}' with args: {arguments}")
         
         if tool_name == "list_connected_devices":
@@ -83,7 +90,8 @@ class AgentOrchestrator:
                 return {"status": "error", "error": str(e)}
 
         else:
-            return {"status": "error", "error": f"Unknown tool: {tool_name}"}
+            # Delegate to MCP Manager Bridge
+            return await mcp_manager.execute_mcp_tool(tool_name, arguments)
 
     async def process_user_request(
         self,
@@ -116,7 +124,7 @@ class AgentOrchestrator:
             logger.info(f"[Orchestrator] Turn {turn + 1}/{max_turns}")
             response = await llm_router.chat_completion(
                 messages=messages,
-                tools=self.tools,
+                tools=self.get_all_tools(),
                 preferred_model=model_override
             )
 
