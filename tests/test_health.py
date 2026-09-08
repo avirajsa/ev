@@ -16,3 +16,8 @@ def test_list_devices_endpoint():
     response = client.get("/api/v1/devices", headers=headers)
     assert response.status_code == 200
     assert "devices" in response.json()
+
+def test_web_docs_endpoint():
+    response = client.get("/docs-site/")
+    assert response.status_code == 200
+    assert "EV System" in response.text

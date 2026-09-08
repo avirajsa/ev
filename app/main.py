@@ -35,7 +35,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+import os
+from fastapi.staticfiles import StaticFiles
+
 app.include_router(main_router)
+
+# Mount Web Documentation Portal
+docs_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
+if os.path.exists(docs_path):
+    app.mount("/docs-site", StaticFiles(directory=docs_path, html=True), name="docs-site")
 
 @app.get("/")
 async def root_health_check():
@@ -44,7 +52,8 @@ async def root_health_check():
         "system": settings.APP_NAME,
         "version": "0.1.0",
         "primary_model": settings.PRIMARY_MODEL,
-        "docs": "/docs"
+        "docs_api": "/docs",
+        "docs_web": "/docs-site"
     }
 
 if __name__ == "__main__":
