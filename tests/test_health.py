@@ -20,4 +20,4 @@ def test_list_devices_endpoint():
 def test_web_docs_endpoint():
     response = client.get("/docs-site/")
     assert response.status_code == 200
-    assert "EV System" in response.text
+    assert "EV ASSISTANT" in response.text

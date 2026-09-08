@@ -1,353 +1,225 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EV System — Omnipresent AI Assistant Backend Documentation</title>
-    <meta name="description" content="Editorial documentation & interactive developer guide for EV — Omnipresent AI Assistant Cloud Backend with Multi-Device Remote Control & OpenRouter Dynamic Model Failover.">
+    <title>EV — Editorial System Architecture Documentation</title>
+    <meta name="description" content="Minimal editorial system documentation for EV — Omnipresent AI Assistant Cloud Backend.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Background Glow Effect -->
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
 
-    <!-- Layout Container -->
     <div class="app-layout">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="brand">
-                <div class="brand-logo">
-                    <span class="logo-inner">EV</span>
-                </div>
-                <div class="brand-text">
-                    <span class="brand-name">EV SYSTEM</span>
-                    <span class="brand-tag">v0.1.0 Architecture</span>
-                </div>
-            </div>
-
-            <div class="search-box">
-                <i data-lucide="search" class="search-icon"></i>
-                <input type="text" id="doc-search" placeholder="Search docs..." autocomplete="off">
-                <kbd>/</kbd>
+                <span class="brand-title">EV</span>
+                <span class="brand-ver">v0.1</span>
             </div>
 
             <nav class="nav-menu">
-                <div class="nav-section">
-                    <div class="nav-section-title">Getting Started</div>
-                    <a href="#overview" class="nav-link active"><i data-lucide="compass"></i> Overview</a>
-                    <a href="#quickstart" class="nav-link"><i data-lucide="zap"></i> Quick Start (uv)</a>
-                    <a href="#docker" class="nav-link"><i data-lucide="box"></i> Docker Deployment</a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Core Systems</div>
-                    <a href="#failover" class="nav-link"><i data-lucide="shield-alert"></i> Dynamic LLM Failover</a>
-                    <a href="#device-hub" class="nav-link"><i data-lucide="cpu"></i> Device RPC & WebSockets</a>
-                    <a href="#mcp" class="nav-link"><i data-lucide="layers"></i> MCP Server Integration</a>
-                    <a href="#memory" class="nav-link"><i data-lucide="database"></i> Long-Term Vector Memory</a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">API Reference</div>
-                    <a href="#rest-api" class="nav-link"><i data-lucide="server"></i> REST Endpoints</a>
-                    <a href="#websocket-api" class="nav-link"><i data-lucide="radio"></i> WebSocket Protocol</a>
-                </div>
-
-                <div class="nav-section">
-                    <div class="nav-section-title">Developer Tooling</div>
-                    <a href="#makefile" class="nav-link"><i data-lucide="terminal"></i> Makefile Commands</a>
-                    <a href="#ci-cd" class="nav-link"><i data-lucide="git-branch"></i> GitHub Actions CI</a>
-                </div>
+                <a href="#overview" class="nav-link active"><span class="num">01</span> Overview</a>
+                <a href="#quickstart" class="nav-link"><span class="num">02</span> Quick Start</a>
+                <a href="#failover" class="nav-link"><span class="num">03</span> LLM Routing</a>
+                <a href="#device-hub" class="nav-link"><span class="num">04</span> Device RPC</a>
+                <a href="#api" class="nav-link"><span class="num">05</span> API Reference</a>
             </nav>
 
             <div class="sidebar-footer">
                 <div class="status-indicator">
-                    <span class="status-dot green"></span>
-                    <span class="status-text">Backend Core Online</span>
+                    <span class="status-dot"></span>
+                    <span class="status-text">SYSTEM OPERATIONAL</span>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content Area -->
         <main class="content-wrapper">
-            <!-- Top Navbar -->
             <header class="top-nav">
-                <div class="nav-breadcrumbs">
-                    <span class="breadcrumb-root">Documentation</span>
-                    <span class="breadcrumb-sep">/</span>
-                    <span class="breadcrumb-current" id="current-crumb">Overview</span>
-                </div>
-                <div class="top-nav-actions">
-                    <a href="http://localhost:8000/docs" target="_blank" class="nav-btn secondary">
-                        <i data-lucide="external-link"></i> OpenAPI Docs
-                    </a>
-                    <a href="https://github.com/avirajsa/ev" target="_blank" class="nav-btn primary">
-                        <i data-lucide="github"></i> Repository
-                    </a>
+                <div class="nav-path">DOCUMENTATION / OVERVIEW</div>
+                <div class="top-links">
+                    <a href="http://localhost:8000/docs" target="_blank" class="text-link">OPENAPI</a>
+                    <a href="https://github.com/avirajsa/ev" target="_blank" class="text-link">GITHUB</a>
                 </div>
             </header>
 
-            <!-- Main Content Container -->
             <div class="content">
 
                 <!-- Hero Section -->
                 <section id="overview" class="doc-section">
-                    <div class="hero-badge">
-                        <i data-lucide="sparkles"></i> Omnipresent Intelligence Backbone
-                    </div>
-                    <h1 class="hero-title">EV Cloud Backend</h1>
+                    <div class="meta-tag">ARCHITECTURE SPECS</div>
+                    <h1 class="hero-title">EV ASSISTANT</h1>
                     <p class="hero-subtitle">
-                        An EDITH-inspired omnipresent AI Assistant core with real-time multi-device remote execution, resilient OpenRouter model failover, persistent vector memory, and Model Context Protocol (MCP) server integration.
+                        Omnipresent AI assistant cloud core. Multi-device execution engine with resilient OpenRouter fallback, persistent vector memory, and MCP server tools.
                     </p>
 
-                    <!-- Feature Cards Grid -->
-                    <div class="cards-grid">
-                        <div class="feature-card">
-                            <div class="card-icon cyan"><i data-lucide="shield-check"></i></div>
-                            <h3>Resilient LLM Failover</h3>
-                            <p>Automatically switches models (Claude ➔ GPT-4o ➔ Gemini ➔ Llama) if token limits, 429 rate limits, or outages occur.</p>
+                    <div class="spec-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">ROUTER</span>
+                            <span class="spec-val">OpenRouter Auto-Fallback</span>
                         </div>
-
-                        <div class="feature-card">
-                            <div class="card-icon purple"><i data-lucide="network"></i></div>
-                            <h3>Remote Device RPC</h3>
-                            <p>Full-duplex WebSocket hub connects Laptop daemons, Mobile voice apps, and IoT nodes for cross-device control.</p>
+                        <div class="spec-item">
+                            <span class="spec-label">PROTOCOL</span>
+                            <span class="spec-val">WebSocket RPC (/ws/connect)</span>
                         </div>
-
-                        <div class="feature-card">
-                            <div class="card-icon indigo"><i data-lucide="zap"></i></div>
-                            <h3>Frictionless Astral uv</h3>
-                            <p>Blazing fast package management with sub-second dependency installation and zero-config virtualenvs.</p>
+                        <div class="spec-item">
+                            <span class="spec-label">ENV / BUILD</span>
+                            <span class="spec-val">Astral uv & Docker Compose</span>
                         </div>
-
-                        <div class="feature-card">
-                            <div class="card-icon emerald"><i data-lucide="container"></i></div>
-                            <h3>Docker Compose Stack</h3>
-                            <p>Single command multi-stage container deployment with PostgreSQL (pgvector) and Redis cache backend.</p>
+                        <div class="spec-item">
+                            <span class="spec-label">MEMORY</span>
+                            <span class="spec-val">PostgreSQL + Pgvector</span>
                         </div>
                     </div>
                 </section>
 
-                <hr class="section-divider">
-
-                <!-- Interactive OpenRouter Model Failover Simulator -->
-                <section id="failover" class="doc-section">
-                    <h2 class="section-title"><i data-lucide="shield-alert"></i> OpenRouter Dynamic Model Failover</h2>
-                    <p class="section-desc">
-                        EV automatically routes traffic via OpenRouter and monitors response status codes. Try the interactive simulator below to experience how EV seamlessly fails over models without dropping context:
-                    </p>
-
-                    <div class="interactive-simulator-box">
-                        <div class="sim-header">
-                            <div class="sim-title"><i data-lucide="activity"></i> Live LLM Router Simulation Engine</div>
-                            <div class="sim-actions">
-                                <button id="btn-sim-ratelimit" class="sim-btn warning"><i data-lucide="alert-triangle"></i> Trigger HTTP 429 (Rate Limit)</button>
-                                <button id="btn-sim-quota" class="sim-btn danger"><i data-lucide="dollar-sign"></i> Trigger Out-Of-Tokens (402)</button>
-                                <button id="btn-sim-reset" class="sim-btn secondary"><i data-lucide="rotate-ccw"></i> Reset Chain</button>
-                            </div>
-                        </div>
-
-                        <div class="sim-chain">
-                            <div class="chain-node active" id="node-claude">
-                                <div class="node-badge">Primary</div>
-                                <div class="node-name">anthropic/claude-3.5-sonnet</div>
-                                <div class="node-status">Active / Primary</div>
-                            </div>
-                            <div class="chain-arrow"><i data-lucide="chevron-right"></i></div>
-                            
-                            <div class="chain-node" id="node-gpt">
-                                <div class="node-badge">Fallback 1</div>
-                                <div class="node-name">openai/gpt-4o</div>
-                                <div class="node-status">Standby</div>
-                            </div>
-                            <div class="chain-arrow"><i data-lucide="chevron-right"></i></div>
-
-                            <div class="chain-node" id="node-gemini">
-                                <div class="node-badge">Fallback 2</div>
-                                <div class="node-name">google/gemini-2.0-flash-001</div>
-                                <div class="node-status">Standby</div>
-                            </div>
-                            <div class="chain-arrow"><i data-lucide="chevron-right"></i></div>
-
-                            <div class="chain-node" id="node-llama">
-                                <div class="node-badge">Fallback 3</div>
-                                <div class="node-name">meta-llama/llama-3.3-70b</div>
-                                <div class="node-status">Standby</div>
-                            </div>
-                        </div>
-
-                        <div class="sim-console">
-                            <div class="console-header">System Router Output Log</div>
-                            <pre class="console-body" id="sim-log">[LLMRouter] Initialized fallback chain: Anthropic Claude 3.5 Sonnet -> OpenAI GPT-4o -> Gemini 2.0 -> Llama 3.3
-[LLMRouter] Ready to process requests.</pre>
-                        </div>
-                    </div>
-                </section>
-
-                <hr class="section-divider">
-
-                <!-- Interactive Connected Device Hub -->
-                <section id="device-hub" class="doc-section">
-                    <h2 class="section-title"><i data-lucide="cpu"></i> Multi-Device WebSocket Network Topology</h2>
-                    <p class="section-desc">
-                        Client nodes connect to EV's WebSocket Hub (`/ws/connect`). Commands issued from one device (e.g. mobile voice app) are dispatched via bidirectional RPC to target devices (e.g. laptop daemon).
-                    </p>
-
-                    <div class="topology-container">
-                        <div class="topology-hub">
-                            <div class="hub-icon"><i data-lucide="server"></i></div>
-                            <div class="hub-title">EV Cloud Core</div>
-                            <div class="hub-ip">ws://localhost:8000/ws/connect</div>
-                        </div>
-
-                        <div class="topology-nodes">
-                            <div class="device-node active">
-                                <div class="node-header">
-                                    <i data-lucide="laptop" class="dev-icon"></i>
-                                    <span class="dev-name">MacBook Pro Node</span>
-                                    <span class="dev-tag online">Connected</span>
-                                </div>
-                                <div class="dev-caps">
-                                    <span class="cap-pill">Terminal</span>
-                                    <span class="cap-pill">GUI Automator</span>
-                                    <span class="cap-pill">File System</span>
-                                </div>
-                                <div class="dev-id">ID: laptop-macbook-pro-1</div>
-                            </div>
-
-                            <div class="device-node active">
-                                <div class="node-header">
-                                    <i data-lucide="smartphone" class="dev-icon"></i>
-                                    <span class="dev-name">Mobile Phone App</span>
-                                    <span class="dev-tag online">Connected</span>
-                                </div>
-                                <div class="dev-caps">
-                                    <span class="cap-pill">Voice Streaming</span>
-                                    <span class="cap-pill">GPS Telemetry</span>
-                                </div>
-                                <div class="dev-id">ID: phone-ios-user</div>
-                            </div>
-
-                            <div class="device-node">
-                                <div class="node-header">
-                                    <i data-lucide="bot" class="dev-icon"></i>
-                                    <span class="dev-name">Smart Home IoT Node</span>
-                                    <span class="dev-tag offline">Standby</span>
-                                </div>
-                                <div class="dev-caps">
-                                    <span class="cap-pill">Relay Control</span>
-                                    <span class="cap-pill">Sensors</span>
-                                </div>
-                                <div class="dev-id">ID: iot-esp32-home</div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <hr class="section-divider">
+                <div class="divider"></div>
 
                 <!-- Quick Start Section -->
                 <section id="quickstart" class="doc-section">
-                    <h2 class="section-title"><i data-lucide="zap"></i> Quick Start Guide (`uv`)</h2>
-                    <p class="section-desc">Get the EV Cloud Backend running locally in under 30 seconds using Astral `uv`:</p>
+                    <span class="section-num yellow">02</span>
+                    <h2 class="section-title">QUICK START</h2>
+                    <p class="section-desc">Initialize backend using Astral uv or Docker Compose stack.</p>
 
-                    <div class="code-tab-container">
-                        <div class="code-tabs">
-                            <button class="code-tab active" data-target="tab-uv">Local (uv)</button>
-                            <button class="code-tab" data-target="tab-make">Makefile Shortcuts</button>
+                    <div class="code-tab-box">
+                        <div class="tab-header">
+                            <button class="tab-btn active" data-target="code-uv">uv (Local)</button>
+                            <button class="tab-btn" data-target="code-docker">Docker Compose</button>
+                            <button class="tab-btn" data-target="code-make">Makefile</button>
                         </div>
-                        <div class="code-content active" id="tab-uv">
-                            <pre><code><span class="comment"># 1. Clone repository and copy environment config</span>
-<span class="command">cp</span> .env.example .env
+                        <div class="code-panel active" id="code-uv">
+<pre><code><span class="c"># Setup environment and install dependencies</span>
+<span class="k">cp</span> .env.example .env
+<span class="k">uv</span> venv
+<span class="k">uv</span> pip install -e <span class="s">".[dev]"</span>
 
-<span class="comment"># 2. Create virtualenv & install dependencies in milliseconds</span>
-<span class="command">uv</span> venv
-<span class="command">uv</span> pip install -e ".[dev]"
-
-<span class="comment"># 3. Start development server</span>
-<span class="command">uv</span> run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000</code></pre>
+<span class="c"># Start server</span>
+<span class="k">uv</span> run uvicorn app.main:app --reload</code></pre>
                         </div>
-                        <div class="code-content" id="tab-make">
-                            <pre><code><span class="comment"># Developer shortcuts via Makefile</span>
-<span class="command">make</span> install      <span class="comment"># Create venv & install dependencies</span>
-<span class="command">make</span> dev          <span class="comment"># Run uvicorn server with auto-reload</span>
-<span class="command">make</span> test         <span class="comment"># Run pytest test suite</span>
-<span class="command">make</span> docker-up    <span class="comment"># Launch full Docker Compose stack</span></code></pre>
+                        <div class="code-panel" id="code-docker">
+<pre><code><span class="c"># Launch backend, Postgres (pgvector), and Redis</span>
+<span class="k">docker</span> compose up -d --build
+
+<span class="c"># Check logs</span>
+<span class="k">docker</span> compose logs -f ev-backend</code></pre>
+                        </div>
+                        <div class="code-panel" id="code-make">
+<pre><code><span class="k">make</span> install    <span class="c"># Initialize venv & dependencies</span>
+<span class="k">make</span> dev        <span class="c"># Run dev server with auto-reload</span>
+<span class="k">make</span> test       <span class="c"># Execute pytest suite</span>
+<span class="k">make</span> docker-up  <span class="c"># Boot Docker stack</span></code></pre>
                         </div>
                     </div>
                 </section>
 
-                <hr class="section-divider">
+                <div class="divider"></div>
 
-                <!-- API Reference Code Snippets -->
-                <section id="rest-api" class="doc-section">
-                    <h2 class="section-title"><i data-lucide="code"></i> API Integration Snippets</h2>
-                    <p class="section-desc">Sample code snippets to query EV Agent and dispatch remote commands across connected devices:</p>
+                <!-- LLM Routing Section -->
+                <section id="failover" class="doc-section">
+                    <span class="section-num violet">03</span>
+                    <h2 class="section-title">LLM ROUTING & FALLBACK</h2>
+                    <p class="section-desc">Automatic failover across models upon rate limits (429), token limits, or provider downtime.</p>
 
-                    <div class="code-tab-container">
-                        <div class="code-tabs">
-                            <button class="code-tab active" data-target="tab-python">Python (Client WebSocket)</button>
-                            <button class="code-tab" data-target="tab-curl">cURL (Agent Query)</button>
-                            <button class="code-tab" data-target="tab-js">Node.js / JS</button>
+                    <div class="simulator-panel">
+                        <div class="sim-controls">
+                            <span class="sim-label">FAILOVER SIMULATOR</span>
+                            <div class="btn-group">
+                                <button id="btn-trigger-429" class="btn-outline pink-btn">TRIGGER 429</button>
+                                <button id="btn-trigger-reset" class="btn-outline text-muted">RESET</button>
+                            </div>
                         </div>
-                        <div class="code-content active" id="tab-python">
-                            <pre><code><span class="keyword">import</span> websockets, asyncio, json
 
-<span class="keyword">async def</span> <span class="function">connect_laptop_client</span>():
-    url = <span class="string">"ws://localhost:8000/ws/connect?token=ev_device_shared_secret_token_12345&device_id=my-laptop&device_name=MacBook&device_type=laptop&capabilities=[\"gui\",\"terminal\"]"</span>
-    <span class="keyword">async with</span> websockets.connect(url) <span class="keyword">as</span> ws:
-        print(<span class="string">"Registered with EV Network:"</span>, <span class="keyword">await</span> ws.recv())
-        <span class="keyword">while True</span>:
-            frame = json.loads(<span class="keyword">await</span> ws.recv())
-            <span class="keyword">if</span> frame.get(<span class="string">"type"</span>) == <span class="string">"rpc_request"</span>:
-                <span class="comment"># Execute local action and send response back to EV Cloud</span>
-                await ws.send(json.dumps({
-                    <span class="string">"type"</span>: <span class="string">"rpc_response"</span>,
-                    <span class="string">"request_id"</span>: frame[<span class="string">"request_id"</span>],
-                    <span class="string">"status"</span>: <span class="string">"success"</span>,
-                    <span class="string">"result"</span>: {<span class="string">"output"</span>: <span class="string">"Command executed on Laptop"</span>}
-                }))
-
-asyncio.run(connect_laptop_client())</code></pre>
+                        <div class="model-pipeline">
+                            <div class="model-step active" id="m-claude">
+                                <span class="step-role">PRIMARY</span>
+                                <span class="step-name">claude-3.5-sonnet</span>
+                            </div>
+                            <span class="arrow">→</span>
+                            <div class="model-step" id="m-gpt">
+                                <span class="step-role">FALLBACK 1</span>
+                                <span class="step-name">gpt-4o</span>
+                            </div>
+                            <span class="arrow">→</span>
+                            <div class="model-step" id="m-gemini">
+                                <span class="step-role">FALLBACK 2</span>
+                                <span class="step-name">gemini-2.0-flash</span>
+                            </div>
+                            <span class="arrow">→</span>
+                            <div class="model-step" id="m-llama">
+                                <span class="step-role">FALLBACK 3</span>
+                                <span class="step-name">llama-3.3-70b</span>
+                            </div>
                         </div>
-                        <div class="code-content" id="tab-curl">
-                            <pre><code><span class="comment"># Submit a request to EV Agent</span>
-<span class="command">curl</span> -X POST http://localhost:8000/api/v1/agent/query \
-  -H <span class="string">"Authorization: Bearer ev_device_shared_secret_token_12345"</span> \
-  -H <span class="string">"Content-Type: application/json"</span> \
-  -d <span class="string">'{
-    "message": "Open Spotify on my laptop",
-    "preferred_model": "anthropic/claude-3.5-sonnet"
-  }'</span></code></pre>
-                        </div>
-                        <div class="code-content" id="tab-js">
-                            <pre><code><span class="keyword">const</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8000/ws/connect?token=ev_device_shared_secret_token_12345&device_id=phone-app&device_type=phone'</span>);
 
-ws.onopen = () => console.log(<span class="string">'Mobile Phone App connected to EV'</span>);
-ws.onmessage = (event) => {
-  <span class="keyword">const</span> data = JSON.parse(event.data);
-  console.log(<span class="string">'Received event from EV Cloud:'</span>, data);
-};</code></pre>
+                        <div class="console-box" id="sim-console">
+[ROUTER] Primary model: anthropic/claude-3.5-sonnet. Ready.
+                        </div>
+                    </div>
+                </section>
+
+                <div class="divider"></div>
+
+                <!-- Device RPC Section -->
+                <section id="device-hub" class="doc-section">
+                    <span class="section-num red">04</span>
+                    <h2 class="section-title">DEVICE RPC TOPOLOGY</h2>
+                    <p class="section-desc">Full-duplex WebSocket hub connects distributed client daemons.</p>
+
+                    <div class="device-list">
+                        <div class="device-row">
+                            <span class="dev-type">LAPTOP DAEMON</span>
+                            <span class="dev-id">my-macbook-pro</span>
+                            <span class="dev-caps">terminal, gui, filesystem</span>
+                            <span class="dev-status pink">CONNECTED</span>
+                        </div>
+                        <div class="device-row">
+                            <span class="dev-type">MOBILE PHONE APP</span>
+                            <span class="dev-id">iphone-user-client</span>
+                            <span class="dev-caps">voice_stt, gps, camera</span>
+                            <span class="dev-status violet">CONNECTED</span>
+                        </div>
+                        <div class="device-row">
+                            <span class="dev-type">IOT NODE</span>
+                            <span class="dev-id">esp32-relay-hub</span>
+                            <span class="dev-caps">gpio, sensors</span>
+                            <span class="dev-status mute">STANDBY</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="divider"></div>
+
+                <!-- API Reference Section -->
+                <section id="api" class="doc-section">
+                    <span class="section-num pink">05</span>
+                    <h2 class="section-title">API REFERENCE</h2>
+                    <p class="section-desc">Minimal WebSocket connection protocol for client daemons.</p>
+
+                    <div class="code-tab-box">
+                        <div class="code-panel active">
+<pre><code><span class="c"># WebSocket Client Connection String</span>
+ws://&lt;HOST&gt;:8000/ws/connect?token=SECRET&device_id=laptop-1&device_name=MacBook&device_type=laptop
+
+<span class="c"># Incoming RPC Frame format</span>
+{
+  <span class="k">"type"</span>: <span class="s">"rpc_request"</span>,
+  <span class="k">"request_id"</span>: <span class="s">"uuid-1234"</span>,
+  <span class="k">"action"</span>: <span class="s">"open_application"</span>,
+  <span class="k">"params"</span>: { <span class="k">"app_name"</span>: <span class="s">"Spotify"</span> }
+}</code></pre>
                         </div>
                     </div>
                 </section>
 
                 <footer class="doc-footer">
-                    <div class="footer-brand">EV System Documentation • Built with Ultra-Minimal Editorial Aesthetics</div>
-                    <div class="footer-links">
-                        <a href="https://github.com/avirajsa/ev" target="_blank">GitHub</a>
-                        <a href="http://localhost:8000/docs" target="_blank">OpenAPI Docs</a>
-                    </div>
+                    <span>EV AI ASSISTANT BACKEND</span>
+                    <span>EDITORIAL HARMONIOUS PALETTE EDITION</span>
                 </footer>
 
             </div>
@@ -355,8 +227,5 @@ ws.onmessage = (event) => {
     </div>
 
     <script src="app.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
 </body>
 </html>
